@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>PhoneGap</title>
+  <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+
+    <h1>Hello PhoneGap</h1>
+    <script type="text/javascript" charset="utf-8">
+    
+    var watchID = null;
+    
+    function onDeviceReady() {
+       navigator.geolocation.getCurrentPosition(onSuccess, onError);
+       pictureSource=navigator.camera.PictureSourceType;
+       destinationType=navigator.camera.DestinationType;
+       startWatch();
+    }
+    
+    document.addEventListener("deviceready", onDeviceReady, false);
+   
+    function onSuccess(position) {        
+     	var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          +                                   position.timestamp          + '<br />';
+    };
+    function onSuccessHeading(heading) {
+     	var element = document.getElementById('heading');
+        element.innerHTML = 'Heading: ' + heading.magneticHeading;
+    }
+    function onError(error) {
+     		alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+    }
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+     
+   function startWatch() {
+        // Update compass every 3 seconds
+        var options = { frequency: 3000 };
+        watchID = navigator.compass.watchHeading(onSuccessHeading, onError, options);
+    }
+
+    function stopWatch() {
+        if (watchID) {
+            navigator.compass.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+    
+   function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+      destinationType: destinationType.DATA_URL });
+    }
+    function capturePhotoEdit() {
+      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+    function onPhotoDataSuccess(imageData) {
+      // console.log(imageData);
+      var smallImage = document.getElementById('smallImage');
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+    function onPhotoURISuccess(imageURI) {
+      // console.log(imageURI);
+      var largeImage = document.getElementById('largeImage');
+      largeImage.style.display = 'block';
+      largeImage.src = imageURI;
+    }
+     
+     </script>
+     
+      </head>
+ <body>
+ 	<button onclick="capturePhoto();">Capture Photo</button> <br>
+ 	<button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+ 	<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+ 	<button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+
+ 	<div id="heading">Waiting for heading...</div>
+    <button onclick="startWatch();">Start Watching</button>
+    <button onclick="stopWatch();">Stop Watching</button>
+
+ 	<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;" id="largeImage" src="" />
+ 	<p id="geolocation">Finding geolocation...</p>
+ 	
+ 	
+ </body>
+</html>
