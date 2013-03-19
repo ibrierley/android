@@ -40,8 +40,8 @@
       alert('Failed because: ' + message);
     }
     
-   function openURL() {
-         var ref = window.open('http://apache.org', '_blank', 'location=yes');
+   function openURL( URL ) {
+         var ref = window.open( URL , '_blank', 'location=yes');
          ref.addEventListener('loadstart', function() { alert('start: ' + event.url); });
          ref.addEventListener('loadstop', function() { alert('stop: ' + event.url); });
          ref.addEventListener('exit', function() { alert(event.type); });
@@ -102,7 +102,7 @@
  	<button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
  	<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
  	<button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
- 	<button onclick="openURL();">Open URL</button><br>
+ 	<button onclick="openURL( 'http://apache.org');">Open URL</button><br>
 
  	<div id="heading">Waiting for heading...</div>
     <button onclick="startWatch();">Start Watching</button>
