@@ -3,12 +3,11 @@ package com.example.gltest;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.GLU;
+
 import java.nio.FloatBuffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
+
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -118,9 +117,9 @@ public class GLRenderer implements Renderer {
         
         // Draw one translated a bit to the right and rotated to be facing to the left.
         Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 1.0f, 0.0f, 0.0f);
+        Matrix.translateM(mModelMatrix, 0, -0.5f, 0.0f, 0.0f);
         Matrix.rotateM(mModelMatrix, 0, 90.0f, 0.0f, 1.0f, 0.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);
+        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 90.0f, 1.0f);
         drawTriangle(mTriangle3Vertices);
 		
 	}

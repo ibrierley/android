@@ -1,6 +1,17 @@
 <!DOCTYPE HTML>
 <html>
- <head>
+<head>
+ 
+  <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      #myCanvas {
+        border: 1px solid #9C9898;
+      }
+  </style>
+
   <title>PhoneGap</title>
   <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
 
@@ -96,8 +107,19 @@
      
      </script>
      
-      </head>
+ </head>
  <body>
+	<canvas id="myCanvas" width="578" height="200"></canvas>
+	<script>
+    	var canvas = document.getElementById('myCanvas');
+    	var context = canvas.getContext('2d');
+    	var rectWidth = 600;
+        var rectHeight = 400;
+        context.translate(canvas.width / 2, canvas.height / 2);
+        context.fillStyle = 'blue';
+        context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+ 	</script>
+<hr />
  	<button onclick="capturePhoto();">Capture Photo</button> <br>
  	<button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
  	<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
