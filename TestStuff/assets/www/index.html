@@ -13,10 +13,14 @@
   </style>
 
   <title>PhoneGap</title>
-  <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+  <script type="text/javascript"  charset="utf-8" src="cordova-2.5.0.js"></script>
 
     <h1>Hello PhoneGap</h1>
     <script type="text/javascript" charset="utf-8">
+    
+    function init() {
+    	loadScreen();
+    }
     
     var watchID = null;
     
@@ -108,16 +112,40 @@
      </script>
      
  </head>
- <body>
-	<canvas id="myCanvas" width="578" height="200"></canvas>
+ <body onload=init()>
+	<canvas id="layer1" width="200" height="200" style="z-index: 1; position:absolute; left:250px; top:20px;" ></canvas>
+	<canvas id="layer2" width="200" height="200" style="z-index: 2; position:absolute; left:250px; top:200px;" ></canvas>
+
+	<script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.3.0-beta2.js"></script>
 	<script>
-    	var canvas = document.getElementById('myCanvas');
-    	var context = canvas.getContext('2d');
-    	var rectWidth = 600;
-        var rectHeight = 400;
-        context.translate(canvas.width / 2, canvas.height / 2);
-        context.fillStyle = 'blue';
-        context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+  		
+  		function loadScreen() {
+  			alert('test');
+  			var canvas2 = document.getElementById('layer2');
+    		var canvas1 = document.getElementById('layer1');
+    		var context = canvas1.getContext('2d');
+    		var context2 = canvas2.getContext('2d');
+    		var rectWidth = 600;
+        	var rectHeight = 400;
+ 		
+ 		
+        	context.translate(canvas1.width / 2, canvas1.height / 2);
+        	context.fillStyle = 'green';
+        	context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+        
+        	context2.translate(canvas2.width / 2, canvas2.height / 2);
+        	context2.fillStyle='red';
+        	context2.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+        
+        }
+//            var stage = new Kinetic.Stage({
+//        	container: 'container',
+//        	width: 100,
+ //       	height: 100
+ //     	});
+ 
+ 		
+ 
  	</script>
 <hr />
  	<button onclick="capturePhoto();">Capture Photo</button> <br>
